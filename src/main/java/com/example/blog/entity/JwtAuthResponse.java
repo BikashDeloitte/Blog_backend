@@ -1,14 +1,9 @@
 package com.example.blog.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@Builder
 public class JwtAuthResponse {
     private String token;
     private UserData userData;

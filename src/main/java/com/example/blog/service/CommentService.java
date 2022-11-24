@@ -32,7 +32,7 @@ public class CommentService {
         Optional<Post> post = postRespository.findById(postId);
         Optional<UserData> user = userDataRespository.findById(userId);
         //
-        Comment comment = mapping.commentDtoToComment(new CommentDto(comments));
+        Comment comment = mapping.commentDtoToComment( CommentDto.builder().Comment(comments).build());
 
         //setting commented date
         comment.setCommentDate(LocalDate.now());

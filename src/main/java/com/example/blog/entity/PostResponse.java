@@ -1,16 +1,11 @@
 package com.example.blog.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@Builder
 public class PostResponse {
 
     private List<Post> post;

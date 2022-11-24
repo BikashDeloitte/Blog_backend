@@ -1,18 +1,21 @@
 package com.example.blog.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
-@ToString
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Post {
     @Id
@@ -32,20 +35,4 @@ public class Post {
 
     private LocalDate createdDate;
 
-    public Post(String title, String content, PostCategory category, UserData userData, LocalDate createdDate) {
-        this.title = title;
-        this.content = content;
-        this.category = category;
-        this.userData = userData;
-        this.createdDate = createdDate;
-    }
-
-    public Post(String title, String content, String postImage, PostCategory category, UserData userData, LocalDate createdDate) {
-        this.title = title;
-        this.content = content;
-        this.postImage = postImage;
-        this.category = category;
-        this.userData = userData;
-        this.createdDate = createdDate;
-    }
 }

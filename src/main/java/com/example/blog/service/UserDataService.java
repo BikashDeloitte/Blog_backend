@@ -38,7 +38,7 @@ public class UserDataService {
         if(userData != null){
             if(loginData.getPassword().equals(userData.getPassword())){
                 userData.setPassword("********");
-                return new JwtAuthResponse("token",userData);
+                return JwtAuthResponse.builder().token("token").userData(userData).build();
             }
             else{
                 throw new MisMatchException("Password is worry, please");

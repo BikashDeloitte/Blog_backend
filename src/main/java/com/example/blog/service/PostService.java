@@ -8,6 +8,7 @@ import com.example.blog.exception.NotFoundException;
 import com.example.blog.repository.PostCategoryRespository;
 import com.example.blog.repository.PostRespository;
 import com.example.blog.repository.UserDataRespository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -62,10 +63,14 @@ public class PostService {
         Pageable pagePost = PageRequest.of(pageNumber, pageSize);
         Page<Post> pagePostList = postRespository.findAll(pagePost);
         List<Post> posts = pagePostList.getContent();
-        return new PostResponse(posts, pageNumber, pageSize,
-                pagePostList.getTotalElements(),
-                pagePostList.getTotalPages()
-                , pagePostList.isLast());
+
+        return PostResponse.builder()
+                .post(posts)
+                .pageNumber(pageNumber)
+                .pageSize(pageSize)
+                .totalElement(pagePostList.getTotalElements())
+                .latePage(pagePostList.isLast())
+                .build();
     }
 
     //get post by id
@@ -101,7 +106,7 @@ public class PostService {
 
         post.get().setPostImage(randomName);
         postRespository.save(post.get());
-        System.out.println("create full path "+filePath);
+        System.out.println("create full path " + filePath);
         return randomName;
     }
 

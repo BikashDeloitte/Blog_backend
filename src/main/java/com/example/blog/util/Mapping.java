@@ -6,12 +6,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Mapping {
-    public CommentDto commentToCommentDto(Comment comment){
-        String fullName = comment.getUserData().getFirstName()+comment.getUserData().getMiddleName()+comment.getUserData().getLastName();
-        return new CommentDto(comment.getId(), comment.getComment(), fullName, comment.getCommentDate());
+    public CommentDto commentToCommentDto(Comment comment) {
+        String fullName = comment.getUserData().getMiddleName() == "" ?
+                comment.getUserData().getFirstName() +" "+ comment.getUserData().getLastName()
+                :
+                comment.getUserData().getFirstName() +" "+ comment.getUserData().getMiddleName() +" "+ comment.getUserData().getLastName();
+        return CommentDto.builder()
+                .id(comment.getId())
+                .Comment(comment.getComment())
+                .userName(fullName)
+                .commentDate(comment.getCommentDate())
+                .build();
     }
 
-    public Comment commentDtoToComment(CommentDto commentDto){
-        return new Comment(commentDto.getId(), commentDto.getComment(), commentDto.getCommentDate());
+    public Comment commentDtoToComment(CommentDto commentDto) {
+        return Comment.builder()
+                .id(commentDto.getId())
+                .Comment(commentDto.getComment())
+                .commentDate(commentDto.getCommentDate())
+                .build();
     }
 }
