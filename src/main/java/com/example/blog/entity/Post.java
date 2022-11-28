@@ -24,15 +24,11 @@ public class Post {
     private String title;
     @Size(max = 100000)
     private String content;
-
     private String postImage;
-
     @OneToOne
     private PostCategory category;
-
     @OneToOne
     private UserData userData;
-
     private LocalDate createdDate;
 
 }

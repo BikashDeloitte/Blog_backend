@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
 public class PostController {
 
     @Autowired
