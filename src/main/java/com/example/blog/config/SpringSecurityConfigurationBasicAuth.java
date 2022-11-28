@@ -21,6 +21,7 @@ public class SpringSecurityConfigurationBasicAuth extends WebSecurityConfigurerA
                 .cors().and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/**").permitAll()
+                .antMatchers("/token").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 //.formLogin().and()

@@ -4,7 +4,6 @@ import com.example.blog.entity.Post;
 import com.example.blog.entity.PostResponse;
 import com.example.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -64,7 +62,6 @@ public class PostController {
     public void getPostImage(@PathVariable Long postId, HttpServletResponse response) throws IOException {
 
         InputStream postImage = postService.getPostImage(postId);
-//        System.out.println("inop - >>>>>>>>> " + postImage);
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);
         StreamUtils.copy(postImage,response.getOutputStream());
 

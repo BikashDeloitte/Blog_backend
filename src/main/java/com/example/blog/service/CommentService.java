@@ -32,7 +32,7 @@ public class CommentService {
         Optional<Post> post = postRespository.findById(postId);
         Optional<UserData> user = userDataRespository.findById(userId);
         //
-        Comment comment = mapping.commentDtoToComment( CommentDto.builder().Comment(comments).build());
+        Comment comment = mapping.commentDtoToComment(CommentDto.builder().commentContent(comments).build());
 
         //setting commented date
         comment.setCommentDate(LocalDate.now());
@@ -49,9 +49,7 @@ public class CommentService {
     public List<CommentDto> getAllCommentByPostId(Long postId) {
         List<Comment> commentList = commentRespository.findByPostId(postId);
         List<CommentDto> commentDtoList = new ArrayList<>();
-        commentList.forEach((comment -> {
-            commentDtoList.add(mapping.commentToCommentDto(comment));
-        }));
+        commentList.forEach((comment -> commentDtoList.add(mapping.commentToCommentDto(comment))));
         return commentDtoList;
     }
 }

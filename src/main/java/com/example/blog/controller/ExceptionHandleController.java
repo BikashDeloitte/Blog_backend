@@ -24,7 +24,7 @@ public class ExceptionHandleController {
         Map<String,String> result = new HashMap<>();
 
         //get all error messages
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
 
             //to get the field(variable of object) error occur
             String field = ((FieldError)error).getField();

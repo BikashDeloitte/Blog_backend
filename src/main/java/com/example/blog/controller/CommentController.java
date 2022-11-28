@@ -1,7 +1,6 @@
 package com.example.blog.controller;
 
 import com.example.blog.Dto.CommentDto;
-import com.example.blog.entity.Comment;
 import com.example.blog.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

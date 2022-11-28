@@ -8,7 +8,7 @@ import com.example.blog.exception.NotFoundException;
 import com.example.blog.repository.PostCategoryRespository;
 import com.example.blog.repository.PostRespository;
 import com.example.blog.repository.UserDataRespository;
-import org.springframework.beans.BeanUtils;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -22,10 +22,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Log4j2
 public class PostService {
 
     @Autowired
@@ -90,7 +92,7 @@ public class PostService {
         //file name
         String name = postImage.getOriginalFilename();
         //avoid image same name confluent
-        String randomName = UUID.randomUUID().toString() + name.substring(name.lastIndexOf('.'));
+        String randomName = UUID.randomUUID() + Objects.requireNonNull(name).substring(name.lastIndexOf('.'));
 
         //full path
         String filePath = path + File.separator + randomName;
@@ -106,7 +108,7 @@ public class PostService {
 
         post.get().setPostImage(randomName);
         postRespository.save(post.get());
-        System.out.println("create full path " + filePath);
+        log.info("create full path {}" , filePath);
         return randomName;
     }
 
@@ -116,10 +118,8 @@ public class PostService {
 
         if (post.isPresent()) {
             String fullPath = path + "/" + post.get().getPostImage();
-            InputStream postImage = new FileInputStream(fullPath);
-            return postImage;
+            return new FileInputStream(fullPath);
         }
-
         return null;
     }
 }

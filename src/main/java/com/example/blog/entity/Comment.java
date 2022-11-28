@@ -16,7 +16,7 @@ public class Comment {
     @GeneratedValue
     private Long id;
     @Size(max = 100000)
-    private String Comment;
+    private String commentContent;
     @OneToOne
     private UserData userData;
     @ManyToOne
