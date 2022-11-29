@@ -1,6 +1,7 @@
-package com.example.blog.entity;
+package com.example.blog.Dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 @Builder
 public class PostResponse {
 
-    private List<Post> post;
+    private List<PostDto> post;
     private int pageNumber;
     //total post in one paper
     private int pageSize;

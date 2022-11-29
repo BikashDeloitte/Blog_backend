@@ -1,5 +1,6 @@
 package com.example.blog.controller;
 
+import com.example.blog.Dto.UserDataDto;
 import com.example.blog.entity.JwtAuthResponse;
 import com.example.blog.entity.LoginData;
 import com.example.blog.entity.UserData;
@@ -19,22 +20,22 @@ public class UserController {
 
     //get all user data
     @GetMapping("/userdata")
-    public ResponseEntity<List<UserData>> getAllUserData(){
-        List<UserData> allUserData = userDataService.getAllUserData();
+    public ResponseEntity<List<UserDataDto>> getAllUserData(){
+        List<UserDataDto> allUserData = userDataService.getAllUserData();
         return ResponseEntity.ok(allUserData);
     }
 
     //create user data
     @PostMapping("/userdata")
-    public ResponseEntity<UserData> addUserData(@Valid @RequestBody UserData userData){
-        UserData result = userDataService.addUserData(userData);
+    public ResponseEntity<UserDataDto> addUserData(@Valid @RequestBody UserDataDto userDataDto){
+        UserDataDto result = userDataService.addUserData(userDataDto);
         return ResponseEntity.ok(result);
     }
 
     //get user data by email
     @GetMapping("/userData/{email}")
-    public ResponseEntity<UserData> getUserDataByEmail(@PathVariable String email){
-        UserData userData = userDataService.getUserDataByEmail(email);
+    public ResponseEntity<UserDataDto> getUserDataByEmail(@PathVariable String email){
+        UserDataDto userData = userDataService.getUserDataByEmail(email);
         return ResponseEntity.ok(userData);
     }
 

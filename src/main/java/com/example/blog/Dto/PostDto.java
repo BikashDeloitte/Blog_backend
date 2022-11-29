@@ -1,8 +1,9 @@
 package com.example.blog.Dto;
 
 import com.example.blog.entity.PostCategory;
-import com.example.blog.entity.UserData;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -11,5 +12,6 @@ public class PostDto {
     private String title;
     private String content;
     private PostCategory category;
-    private UserData userData;
+    private String postCreateName;
+    private LocalDate createdDate;
 }

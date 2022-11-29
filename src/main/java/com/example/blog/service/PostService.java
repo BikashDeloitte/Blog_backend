@@ -1,13 +1,15 @@
 package com.example.blog.service;
 
+import com.example.blog.Dto.PostDto;
 import com.example.blog.entity.Post;
 import com.example.blog.entity.PostCategory;
-import com.example.blog.entity.PostResponse;
+import com.example.blog.Dto.PostResponse;
 import com.example.blog.entity.UserData;
 import com.example.blog.exception.NotFoundException;
 import com.example.blog.repository.PostCategoryRespository;
 import com.example.blog.repository.PostRespository;
 import com.example.blog.repository.UserDataRespository;
+import com.example.blog.util.Mapping;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,10 +23,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Log4j2
@@ -36,6 +35,8 @@ public class PostService {
     UserDataRespository userDataRespository;
     @Autowired
     PostCategoryRespository categoryRespository;
+    @Autowired
+    Mapping mapping;
 
     @Value("${image.folderName}")
     private String path;
@@ -46,7 +47,8 @@ public class PostService {
     }
 
     //create or update post data
-    public Post addPost(Post post, Long userId, Long categoryId) {
+    public PostDto addPost(PostDto postDto, Long userId, Long categoryId) {
+        Post post = mapping.postDtoToPost(postDto);
         //mapping user
         Optional<UserData> userData = userDataRespository.findById(userId);
         userData.ifPresent(post::setUserData);
@@ -56,7 +58,7 @@ public class PostService {
         //setting post date
         post.setCreatedDate(LocalDate.now());
 
-        return postRespository.save(post);
+        return mapping.postToPostDto(postRespository.save(post));
     }
 
     //get posts according to page and page details
@@ -64,10 +66,11 @@ public class PostService {
 
         Pageable pagePost = PageRequest.of(pageNumber, pageSize);
         Page<Post> pagePostList = postRespository.findAll(pagePost);
-        List<Post> posts = pagePostList.getContent();
+        List<PostDto> postDtos = new ArrayList<>();
+        pagePostList.getContent().forEach(post -> postDtos.add(mapping.postToPostDto(post)));
 
         return PostResponse.builder()
-                .post(posts)
+                .post(postDtos)
                 .pageNumber(pageNumber)
                 .pageSize(pageSize)
                 .totalElement(pagePostList.getTotalElements())
@@ -76,9 +79,9 @@ public class PostService {
     }
 
     //get post by id
-    public Post getPostById(Long id) {
+    public PostDto getPostById(Long id) {
         Optional<Post> post = postRespository.findById(id);
-        return post.orElse(null);
+        return post.map(value -> mapping.postToPostDto(value)).orElse(null);
     }
 
     //upload image

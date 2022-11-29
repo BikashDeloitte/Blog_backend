@@ -1,7 +1,7 @@
 package com.example.blog.controller;
 
-import com.example.blog.entity.Post;
-import com.example.blog.entity.PostResponse;
+import com.example.blog.Dto.PostDto;
+import com.example.blog.Dto.PostResponse;
 import com.example.blog.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,17 +32,17 @@ public class PostController {
 
     //create post data
     @PostMapping("/user/{userId}/category/{categoryId}/post")
-    public ResponseEntity<Post> addPost(
-            @RequestBody Post post,
+    public ResponseEntity<PostDto> addPost(
+            @RequestBody PostDto postDto,
             @PathVariable Long userId,
             @PathVariable Long categoryId
     ) {
-        return ResponseEntity.ok(postService.addPost(post, userId, categoryId));
+        return ResponseEntity.ok(postService.addPost(postDto, userId, categoryId));
     }
 
     //get post by id
     @GetMapping("/post/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
+    public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getPostById(id));
     }
 
